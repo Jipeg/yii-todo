@@ -1,0 +1,24 @@
+services:
+  phpmyadmin1:
+    image: phpmyadmin
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${DB_HOST}
+      - PMA_USER=${DB_USER}
+      - PMA_PASSWORD=${DB_PASS}
+      - UPLOAD_LIMIT=999999999
+    ports:
+      - '8001:80'
+    networks:
+      - todo-yii-net
+    depends_on:
+      - db
+
+networks:
+  todo-yii-net:
+    driver: bridge
+
+volumes:
+  database:
